@@ -24,13 +24,13 @@ struct NetworkConfig {
         self.decoder = decoder
     }
 
-    static func makeDefaultBaseURL() throws -> URL {
-        var comps = URLComponents()
-        comps.scheme = "https"
-        comps.host   = "restcountries.com"
-        guard let url = comps.url else { throw URLError(.badURL) }
-        return url
-    }
+//    static func makeDefaultBaseURL() throws -> URL {
+//        var comps = URLComponents()
+//        comps.scheme = "https"
+//        comps.host   = "restcountries.com"
+//        guard let url = comps.url else { throw URLError(.badURL) }
+//        return url
+//    }
 
     static func defaultSession() -> URLSession {
         let c = URLSessionConfiguration.default
@@ -48,4 +48,8 @@ extension JSONDecoder {
         d.keyDecodingStrategy = .useDefaultKeys
         return d
     }()
+}
+
+extension NetworkConfig {
+    static let defaultBaseURL = URL(string: "https://restcountries.com")!
 }
