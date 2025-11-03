@@ -9,7 +9,7 @@
 import Foundation
 
 
-final class APIClient {
+final class APIClient: APIClientProtocol {
     private let config: NetworkConfig
     private let backoff = ExponentialBackoff()
 
