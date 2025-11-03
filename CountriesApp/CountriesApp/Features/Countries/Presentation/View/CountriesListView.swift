@@ -7,9 +7,13 @@
 
 
 import SwiftUI
+import SwiftData
 
+import SwiftUI
+import SwiftData
 
 struct CountriesListView: View {
+    @Environment(\.modelContext) private var context
     @StateObject var vm: CountriesListViewModel
 
     var body: some View {
@@ -24,7 +28,6 @@ struct CountriesListView: View {
                     }.padding()
                 } else {
                     List {
-                        // Pinned (Main View) section
                         Section("My Countries (\(vm.pinned.count)/5)") {
                             if vm.pinned.isEmpty {
                                 Text("No countries yet").foregroundStyle(.secondary)
@@ -40,8 +43,6 @@ struct CountriesListView: View {
                                 .onDelete(perform: vm.removePinned)
                             }
                         }
-
-                        // Search results / all
                         Section("All Countries") {
                             ForEach(vm.filtered) { country in
                                 HStack {
