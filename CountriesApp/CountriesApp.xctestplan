@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "929D7862-D4D2-437A-A3E9-FDA80B1D2A49",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:CountriesApp.xcodeproj",
+        "identifier" : "8B6AD1442EB8EFFF004109ED",
+        "name" : "CountriesAppTests"
+      }
+    }
+  ],
+  "version" : 1
+}

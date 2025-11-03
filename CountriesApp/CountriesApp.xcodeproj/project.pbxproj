@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXContainerItemProxy section */
-		8BCECC982EB6A5CA007084C2 /* PBXContainerItemProxy */ = {
+		8B6AD1492EB8EFFF004109ED /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8BC1E1CC2EB4F598008848C1 /* Project object */;
 			proxyType = 1;
@@ -17,8 +17,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8B6AD1452EB8EFFF004109ED /* CountriesAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CountriesAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B6AD1682EB8F01F004109ED /* CountriesApp.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = file; path = CountriesApp.xctestplan; sourceTree = "<group>"; };
 		8BC1E1D42EB4F598008848C1 /* CountriesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountriesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8BCECC942EB6A5CA007084C2 /* CountriesAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CountriesAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -29,16 +30,14 @@
 			);
 			target = 8BC1E1D32EB4F598008848C1 /* CountriesApp */;
 		};
-		8BCECCAB2EB8CCAC007084C2 /* Exceptions for "CountriesAppTests" folder in "CountriesAppTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				CountriesApp.xctestplan,
-			);
-			target = 8BCECC932EB6A5CA007084C2 /* CountriesAppTests */;
-		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		8B6AD1462EB8EFFF004109ED /* CountriesAppTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CountriesAppTests;
+			sourceTree = "<group>";
+		};
 		8BC1E1D62EB4F598008848C1 /* CountriesApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -49,23 +48,20 @@
 		};
 		8BCECC952EB6A5CA007084C2 /* CountriesAppTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				8BCECCAB2EB8CCAC007084C2 /* Exceptions for "CountriesAppTests" folder in "CountriesAppTests" target */,
-			);
 			path = CountriesAppTests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		8BC1E1D12EB4F598008848C1 /* Frameworks */ = {
+		8B6AD1422EB8EFFF004109ED /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8BCECC912EB6A5CA007084C2 /* Frameworks */ = {
+		8BC1E1D12EB4F598008848C1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -78,8 +74,10 @@
 		8BC1E1CB2EB4F598008848C1 = {
 			isa = PBXGroup;
 			children = (
+				8B6AD1682EB8F01F004109ED /* CountriesApp.xctestplan */,
 				8BC1E1D62EB4F598008848C1 /* CountriesApp */,
 				8BCECC952EB6A5CA007084C2 /* CountriesAppTests */,
+				8B6AD1462EB8EFFF004109ED /* CountriesAppTests */,
 				8BC1E1D52EB4F598008848C1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -88,7 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				8BC1E1D42EB4F598008848C1 /* CountriesApp.app */,
-				8BCECC942EB6A5CA007084C2 /* CountriesAppTests.xctest */,
+				8B6AD1452EB8EFFF004109ED /* CountriesAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -96,6 +94,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8B6AD1442EB8EFFF004109ED /* CountriesAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8B6AD14B2EB8EFFF004109ED /* Build configuration list for PBXNativeTarget "CountriesAppTests" */;
+			buildPhases = (
+				8B6AD1412EB8EFFF004109ED /* Sources */,
+				8B6AD1422EB8EFFF004109ED /* Frameworks */,
+				8B6AD1432EB8EFFF004109ED /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8B6AD14A2EB8EFFF004109ED /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				8B6AD1462EB8EFFF004109ED /* CountriesAppTests */,
+			);
+			name = CountriesAppTests;
+			packageProductDependencies = (
+			);
+			productName = CountriesAppTests;
+			productReference = 8B6AD1452EB8EFFF004109ED /* CountriesAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		8BC1E1D32EB4F598008848C1 /* CountriesApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8BC1E1E12EB4F59A008848C1 /* Build configuration list for PBXNativeTarget "CountriesApp" */;
@@ -118,29 +139,6 @@
 			productReference = 8BC1E1D42EB4F598008848C1 /* CountriesApp.app */;
 			productType = "com.apple.product-type.application";
 		};
-		8BCECC932EB6A5CA007084C2 /* CountriesAppTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8BCECC9A2EB6A5CA007084C2 /* Build configuration list for PBXNativeTarget "CountriesAppTests" */;
-			buildPhases = (
-				8BCECC902EB6A5CA007084C2 /* Sources */,
-				8BCECC912EB6A5CA007084C2 /* Frameworks */,
-				8BCECC922EB6A5CA007084C2 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				8BCECC992EB6A5CA007084C2 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				8BCECC952EB6A5CA007084C2 /* CountriesAppTests */,
-			);
-			name = CountriesAppTests;
-			packageProductDependencies = (
-			);
-			productName = CountriesAppTests;
-			productReference = 8BCECC942EB6A5CA007084C2 /* CountriesAppTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -151,12 +149,12 @@
 				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
-					8BC1E1D32EB4F598008848C1 = {
-						CreatedOnToolsVersion = 26.0;
-					};
-					8BCECC932EB6A5CA007084C2 = {
+					8B6AD1442EB8EFFF004109ED = {
 						CreatedOnToolsVersion = 26.0;
 						TestTargetID = 8BC1E1D32EB4F598008848C1;
+					};
+					8BC1E1D32EB4F598008848C1 = {
+						CreatedOnToolsVersion = 26.0;
 					};
 				};
 			};
@@ -175,20 +173,20 @@
 			projectRoot = "";
 			targets = (
 				8BC1E1D32EB4F598008848C1 /* CountriesApp */,
-				8BCECC932EB6A5CA007084C2 /* CountriesAppTests */,
+				8B6AD1442EB8EFFF004109ED /* CountriesAppTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		8BC1E1D22EB4F598008848C1 /* Resources */ = {
+		8B6AD1432EB8EFFF004109ED /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8BCECC922EB6A5CA007084C2 /* Resources */ = {
+		8BC1E1D22EB4F598008848C1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -198,14 +196,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		8BC1E1D02EB4F598008848C1 /* Sources */ = {
+		8B6AD1412EB8EFFF004109ED /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8BCECC902EB6A5CA007084C2 /* Sources */ = {
+		8BC1E1D02EB4F598008848C1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -215,14 +213,56 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		8BCECC992EB6A5CA007084C2 /* PBXTargetDependency */ = {
+		8B6AD14A2EB8EFFF004109ED /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8BC1E1D32EB4F598008848C1 /* CountriesApp */;
-			targetProxy = 8BCECC982EB6A5CA007084C2 /* PBXContainerItemProxy */;
+			targetProxy = 8B6AD1492EB8EFFF004109ED /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		8B6AD14C2EB8EFFF004109ED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q9XVX6TNW7;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Gado.CountriesAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CountriesApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CountriesApp";
+			};
+			name = Debug;
+		};
+		8B6AD14D2EB8EFFF004109ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q9XVX6TNW7;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Gado.CountriesAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CountriesApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CountriesApp";
+			};
+			name = Release;
+		};
 		8BC1E1DF2EB4F59A008848C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -414,51 +454,18 @@
 			};
 			name = Release;
 		};
-		8BCECC9B2EB6A5CA007084C2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q9XVX6TNW7;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Gado.CountriesAppTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CountriesApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CountriesApp";
-			};
-			name = Debug;
-		};
-		8BCECC9C2EB6A5CA007084C2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q9XVX6TNW7;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Gado.CountriesAppTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CountriesApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CountriesApp";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8B6AD14B2EB8EFFF004109ED /* Build configuration list for PBXNativeTarget "CountriesAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8B6AD14C2EB8EFFF004109ED /* Debug */,
+				8B6AD14D2EB8EFFF004109ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8BC1E1CF2EB4F598008848C1 /* Build configuration list for PBXProject "CountriesApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -473,15 +480,6 @@
 			buildConfigurations = (
 				8BC1E1E22EB4F59A008848C1 /* Debug */,
 				8BC1E1E32EB4F59A008848C1 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		8BCECC9A2EB6A5CA007084C2 /* Build configuration list for PBXNativeTarget "CountriesAppTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8BCECC9B2EB6A5CA007084C2 /* Debug */,
-				8BCECC9C2EB6A5CA007084C2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

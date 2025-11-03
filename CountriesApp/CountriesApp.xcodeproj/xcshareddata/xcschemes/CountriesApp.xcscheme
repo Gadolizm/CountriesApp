@@ -33,6 +33,9 @@
             reference = "container:CountriesApp.xctestplan"
             default = "YES">
          </TestPlanReference>
+         <TestPlanReference
+            reference = "container:CountriesApp.xctestplan">
+         </TestPlanReference>
       </TestPlans>
       <Testables>
          <TestableReference
@@ -40,7 +43,7 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8BCECC932EB6A5CA007084C2"
+               BlueprintIdentifier = "8B6AD1442EB8EFFF004109ED"
                BuildableName = "CountriesAppTests.xctest"
                BlueprintName = "CountriesAppTests"
                ReferencedContainer = "container:CountriesApp.xcodeproj">
