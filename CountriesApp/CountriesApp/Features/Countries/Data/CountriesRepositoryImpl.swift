@@ -7,8 +7,8 @@
 
 
 final class CountriesRepositoryImpl: CountriesRepository {
-    private let api: APIClient
-    init(api: APIClient) { self.api = api }
+    private let api: APIClientProtocol
+    init(api: APIClientProtocol) { self.api = api }
 
     func fetchAll() async throws -> [Country] {
         let req = APIRequest(
