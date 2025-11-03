@@ -23,13 +23,13 @@ final class GetAllCountriesUseCaseTests: XCTestCase {
         XCTAssertEqual(codes, ["BR", "ES"])
     }
 
-    func test_useCase_propagatesDomainError() async {
+    func test_useCase_propagatesAppError() async {
         let use = await GetAllCountries(repo: ResultBasedCountriesRepositoryStub(result: .failure(.network)))
 
         do {
             _ = try await use()
             XCTFail("Expected to throw")
-        } catch let error as DomainError {
+        } catch let error as AppError {
             // Don’t require Equatable conformance
             switch error {
             case .network:

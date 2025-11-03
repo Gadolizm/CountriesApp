@@ -5,25 +5,54 @@
 //  Created by Haitham Gado on 01/11/2025.
 //
 
-
 final class CountriesRepositoryImpl: CountriesRepository {
-    private let api: APIClientProtocol
-    init(api: APIClientProtocol) { self.api = api }
+    private let remote: CountriesRemoteService
+    private let store: CountriesPersistence   // SwiftData-backed
 
-    func fetchAll() async throws -> [Country] {
-        let req = APIRequest(
-            path: "/v2/all",
-            query: ["fields":"name,alpha2Code,capital,currencies,region"] // <= required by API
-        )
-        do {
-            let dtos: [CountryDTO] = try await api.perform(req)
-            return dtos.map(CountryMapper.map)
-        } catch let e as APIError {
-            switch e {
-            case .network:          throw DomainError.network
-            case .http(let s):      throw DomainError.server(status: s)
-            case .decoding:         throw DomainError.decoding
+    init(remote: CountriesRemoteService, store: CountriesPersistence) {
+        self.remote = remote
+        self.store  = store
+    }
+
+    func fetchAll(policy: FetchPolicy) async throws -> [Country] {
+        switch policy {
+        case .cacheOnly:
+            return store.loadCountries()
+
+        case .networkOnly:
+            do {
+                let dtos   = try await remote.getAllCountries()
+                let mapped = dtos.map(CountryMapper.map)
+                try? store.saveCountries(mapped)
+                return mapped
+            } catch let e as APIError {
+                throw mapAPIErrorToAppError(e)
             }
-        } catch { throw DomainError.unknown }
+
+        case .cacheFirstRefresh:
+            let cached = store.loadCountries()
+            if !cached.isEmpty { return cached }
+
+            do {
+                let dtos   = try await remote.getAllCountries()
+                let mapped = dtos.map(CountryMapper.map)
+                try? store.saveCountries(mapped)
+                return mapped
+            } catch let e as APIError {
+                throw mapAPIErrorToAppError(e)
+            }
+        }
+    }
+
+    @MainActor func loadPinnedCodes() -> [String] { store.loadPinnedCodes() }
+    @MainActor func savePinnedCodes(_ codes: [String]) throws { try store.savePinnedCodes(codes) }
+}
+
+// MARK: - Private
+private func mapAPIErrorToAppError(_ e: APIError) -> AppError {
+    switch e {
+    case .network:          return .network
+    case .http(let status): return .server(status: status)
+    case .decoding:         return .decoding
     }
 }

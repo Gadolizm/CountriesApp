@@ -15,7 +15,8 @@ final class SwiftDataCountriesStore: CountriesPersistence {
     init(context: ModelContext) { self.context = context }
 
     func loadCountries() -> [Country] {
-        let rows = (try? context.fetch(FetchDescriptor<CountrySD>(sortBy: [SortDescriptor(\.name)]))) ?? []
+        let desc = FetchDescriptor<CountrySD>(sortBy: [SortDescriptor(\.name)])
+        let rows = (try? context.fetch(desc)) ?? []
         return rows.map {
             Country(
                 name: $0.name,
@@ -26,36 +27,39 @@ final class SwiftDataCountriesStore: CountriesPersistence {
         }
     }
 
-    func saveCountries(_ countries: [Country]) throws {
-        let existing = try Dictionary(uniqueKeysWithValues:
-            context.fetch(FetchDescriptor<CountrySD>()).map { ($0.alpha2Code, $0) }
-        )
-        for c in countries {
-            if let row = existing[c.alpha2Code] {
+    func saveCountries(_ list: [Country]) throws {
+        // index existing
+        let existing = try context.fetch(FetchDescriptor<CountrySD>())
+        let byCode = Dictionary(uniqueKeysWithValues: existing.map { ($0.alpha2Code.uppercased(), $0) })
+
+        for c in list {
+            let code = c.alpha2Code.uppercased()
+            if let row = byCode[code] {
                 row.name = c.name
                 row.capital = c.capital
                 row.currencyCode = c.currencies?.first?.code
             } else {
                 context.insert(CountrySD(
-                    alpha2Code: c.alpha2Code,
+                    alpha2Code: code,
                     name: c.name,
                     capital: c.capital,
                     currencyCode: c.currencies?.first?.code
                 ))
             }
         }
-        try context.save()
+        try context.save()   
     }
 
     func loadPinnedCodes() -> [String] {
         let rows = (try? context.fetch(FetchDescriptor<PinnedSD>(sortBy: [SortDescriptor(\.order)]))) ?? []
-        return rows.map(\.alpha2Code)
+        return rows.map { $0.alpha2Code }
     }
 
     func savePinnedCodes(_ codes: [String]) throws {
-        if let rows = try? context.fetch(FetchDescriptor<PinnedSD>()) {
-            rows.forEach { context.delete($0) }
-        }
+        // Clear and rewrite small list
+        let rows = try context.fetch(FetchDescriptor<PinnedSD>())
+        rows.forEach { context.delete($0) }
+
         for (i, code) in codes.prefix(5).enumerated() {
             context.insert(PinnedSD(alpha2Code: code, order: i))
         }

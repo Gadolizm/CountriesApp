@@ -1,8 +1,8 @@
 # 🌍 CountriesApp
 
-SwiftUI iOS app for the **REST Countries API** — search, view details, and pin up to 5 countries.  
-On first launch, the app automatically pins your **current country** from GPS (or **Brazil** if permission is denied).  
-Supports **offline caching** with **SwiftData**, built using **Clean Architecture + MVVM**,  
+SwiftUI iOS app for the **REST Countries API** — search, view details, and pin up to 5 favorite countries.  
+On first launch, the app automatically pins your **current country** using GPS (or defaults to **Brazil** if permission is denied).  
+Supports **offline caching** via **SwiftData**, follows **Clean Architecture + MVVM**,  
 and includes a robust **retrying network layer** with a focused **unit test suite (≥85% coverage)**.
 
 ![Swift](https://img.shields.io/badge/Swift-5.9-orange)
@@ -16,23 +16,23 @@ and includes a robust **retrying network layer** with a focused **unit test suit
 
 - **Language:** Swift 5+
 - **UI:** SwiftUI
-- **Architecture:** Clean Architecture + MVVM
-- **Networking:** URLSession with custom `APIClient` (exponential backoff retries)
+- **Architecture:** Clean Architecture + MVVM (Domain + Service + Repository)
+- **Networking:** Custom `APIClient` built on `URLSession` (with exponential backoff)
 - **Persistence:** SwiftData (`CountrySD`, `PinnedSD`)
-- **Location:** CoreLocation (auto-detect user country on first load)
-- **Testing:** XCTest + Test Plan with fakes, stubs, and mocks
+- **Location:** CoreLocation (reverse geocoding)
+- **Testing:** XCTest + Test Plan + Mocks/Stubs/Fakes (`MockURLProtocol`, `FakeCountriesRemoteService`)
 
 ---
 
-## ✨ Features
+## ✨ Core Features
 
 - 🔎 Search countries by name (case-insensitive)
-- 📍 Auto-pin user country on first load (fallback: **Brazil**)
+- 📍 Auto-pin user’s country on first launch (fallback: Brazil)
 - 📌 Pin up to 5 countries; swipe to remove
-- 🏙 Detailed view with country name, code, capital, and currency
-- 📶 Offline caching using **SwiftData** (instant preload → background refresh)
-- ♻️ Resilient networking with **idempotent request retries** (`GET`: 5xx / 429 / transient URLErrors)
-- 🧭 Custom **App Icon** via asset catalog
+- 🏙 Country detail shows name, code, capital, and currency
+- 📶 Offline mode (instant preload from cache → background refresh)
+- ♻️ Robust networking with safe retries for idempotent requests (`GET`)
+- 🧭 Custom app icon and adaptive dark mode support
 
 ---
 
@@ -41,40 +41,58 @@ and includes a robust **retrying network layer** with a focused **unit test suit
 ```bash
 CountriesApp/
 ├─ App/
-│  └─ CountriesAppApp.swift               # BootstrapView creates VM; attaches modelContainer
-├─ Domain/
-│  ├─ Models/
-│  │  ├─ Country.swift                    # Pure domain
-│  │  └─ Currency.swift
-│  ├─ Errors/
-│  │  └─ DomainError.swift
-│  └─ UseCases/
-│     └─ GetAllCountries.swift
+│  └─ CountriesAppApp.swift                  # Entry point, builds dependencies & ViewModel
+│
+├─ Core/
+│  ├─ Caching/
+│  │  └─ SwiftData/ (CountrySD.swift, PinnedSD.swift, SwiftDataCountriesStore.swift)
+│  ├─ Errors/ (AppError.swift)
+│  ├─ Location/ (LocationProvider.swift, LocationProvidingProtocol.swift)
+│  └─ Network/
+│     ├─ APIClient.swift
+│     ├─ APIRequest.swift
+│     ├─ NetworkConfig.swift
+│     └─ APIError.swift
+│
 ├─ Features/
 │  └─ Countries/
 │     ├─ Data/
 │     │  ├─ DTOs/ (CountryDTO.swift, CurrencyDTO.swift)
-│     │  ├─ Mapping/ (CountryMapper.swift)
-│     │  └─ RepositoryImpl/ (CountriesRepositoryImpl.swift)
-│     └─ Presentation/
-│        ├─ View/ (CountriesListView.swift, CountryDetailView.swift)
-│        └─ ViewModel/
-│           ├─ CountriesListViewModel.swift
-│           └─ Protocols/ (CountriesListViewModelingProtocol.swift)
-├─ Infrastructure/
-│  ├─ Network/
-│  │  ├─ NetworkConfig.swift
-│  │  ├─ APIRequest.swift
-│  │  ├─ APIClient.swift
-│  │  └─ APIError.swift
-│  ├─ Location/
-│  │  ├─ LocationProvidingProtocol.swift
-│  │  └─ LocationProvider.swift
-│  └─ SwiftData/
-│     ├─ Models/ (CountrySD.swift, PinnedSD.swift)
-│     ├─ Mapping/ (SwiftData+Mapping.swift)
-│     ├─ Protocols/ (CountriesPersistence.swift)
-│     └─ SwiftDataCountriesStore.swift
+│     │  ├─ CountryMapper/ (CountryMapper.swift)
+│     │  ├─ RepositoryImpl/
+│     │  │  ├─ CountriesRepositoryImpl.swift
+│     │  │  └─ PinnedRepositoryImpl.swift
+│     │  └─ Service/
+│     │     └─ CountriesRemoteServiceImpl.swift
+│     │
+│     ├─ Domain/
+│     │  ├─ Models/ (Country.swift, Currency.swift)
+│     │  ├─ Protocols/ (CountriesRepository.swift)
+│     │  └─ UseCases/
+│     │     ├─ GetAllCountriesUseCase.swift
+│     │     ├─ LoadPinnedCodesUseCase.swift
+│     │     └─ SavePinnedCodesUseCase.swift
+│     │
+│     ├─ Presentation/
+│     │  ├─ View/
+│     │  │  ├─ CountriesListView.swift
+│     │  │  └─ CountryDetailView.swift
+│     │  └─ ViewModel/
+│     │     ├─ CountriesListViewModel.swift
+│     │     └─ Protocols/ (CountriesListViewModelingProtocol.swift)
+│     │
+│     └─ CountryDetail/
+│        └─ Presentation/ (CountryDetailView.swift)
+│
+├─ CountriesAppTests/
+│  ├─ Countries/
+│  │  ├─ Data/ (CountriesRepositoryImplTests.swift)
+│  │  ├─ Domain/ (GetAllCountriesUseCaseTests.swift)
+│  │  └─ Presentation/
+│  │     └─ ViewModel/ (CountriesListViewModelTests.swift)
+│  ├─ Networking/ (APIClientTests.swift)
+│  └─ Support/ (FakeCountriesRemoteService.swift, InMemoryCountriesStore.swift)
+│
 └─ Assets.xcassets/ (AppIcon, etc.)
 
 ---
@@ -108,16 +126,17 @@ CountriesApp/
       
 ---
 
-## 💾 Persistence & Offline Mode
+## 💾 Persistence & Offline Caching (SwiftData)
+    
 
 - SwiftData Models:
     • CountrySD → cache for countries (alpha2Code, name, capital, currencyCode)
     • PinnedSD  → stores pinned list order (max 5)
 - Flow:
-    1. ViewModel preloads cached data (instant UI)
-    2. Fetches new data from network
-    3. Upserts into SwiftData store
-- Pinned list persists locally and syncs automatically on pin/unpin.
+    1.    Load cached countries instantly.
+    2.    Fetch network updates → persist.
+    3.    Sync pinned codes automatically.
+- Offline-first design ensures a fast and consistent UX.
 
 ---
 
@@ -129,6 +148,14 @@ CountriesApp/
 
 ---
 
+## 🧭 Highlights
+    •    ✅ No force unwraps — all URLs and decoders handled safely.
+    •    ✅ Resilient retries via exponential backoff.
+    •    ✅ Offline-first ViewModel with cache preload.
+    •    ✅ Test-first refactor to fully decoupled layers.
+    •    ✅ Stable coverage ≥85%.
+    
+---
 ## 🧪 Testing & Coverage (≥85%)
 
 Run Tests:

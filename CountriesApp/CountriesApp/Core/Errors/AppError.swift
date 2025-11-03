@@ -1,5 +1,5 @@
 //
-//  DomainError.swift
+//  AppError.swift
 //  CountriesApp
 //
 //  Created by Haitham Gado on 01/11/2025.
@@ -9,14 +9,14 @@
 import Foundation
 
 /// App-facing errors (clean, UI-friendly)
-enum DomainError: Error {
+enum AppError: Error {
     case network           // connectivity / timeout / DNS
     case server(status: Int) // non-2xx HTTP codes if you want to surface them
     case decoding          // JSON shape mismatch
     case unknown
 }
 
-extension DomainError: LocalizedError {
+extension AppError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .network:

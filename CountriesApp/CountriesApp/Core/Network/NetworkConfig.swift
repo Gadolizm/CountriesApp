@@ -15,11 +15,11 @@ struct NetworkConfig {
     let decoder: JSONDecoder
 
     init(
-        baseURL: URL,
+        baseURL: URL? = nil,
         session: URLSession = NetworkConfig.defaultSession(),
         decoder: JSONDecoder = .restCountries
-    ) {
-        self.baseURL = baseURL
+    ) throws {
+        self.baseURL = try baseURL ?? NetworkConfig.makeDefaultBaseURL()
         self.session = session
         self.decoder = decoder
     }
@@ -43,5 +43,11 @@ extension JSONDecoder {
 }
 
 extension NetworkConfig {
-    static let defaultBaseURL = URL(string: "https://restcountries.com")!
+    static func makeDefaultBaseURL() throws -> URL {
+        var comps = URLComponents()
+        comps.scheme = "https"
+        comps.host   = "restcountries.com"
+        guard let url = comps.url else { throw URLError(.badURL) }
+        return url
+    }
 }

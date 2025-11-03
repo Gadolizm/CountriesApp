@@ -5,23 +5,19 @@
 //  Created by Haitham Gado on 03/11/2025.
 //
 
-
 import Foundation
 
+
 final class MockURLProtocol: URLProtocol {
-    private static let q = DispatchQueue(label: "mock.urlprotocol.handler.q")
-    private static var _handler: ((URLRequest) throws -> (HTTPURLResponse, Data))?
-    static var handler: ((URLRequest) throws -> (HTTPURLResponse, Data))? {
-        get { q.sync { _handler } }
-        set { q.sync { _handler = newValue } }
-    }
+    static var handler: ((URLRequest) throws -> (HTTPURLResponse, Data))?
 
     override class func canInit(with request: URLRequest) -> Bool { true }
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
 
     override func startLoading() {
         guard let handler = Self.handler else {
-            client?.urlProtocol(self, didFailWithError: URLError(.badServerResponse)); return
+            client?.urlProtocol(self, didFailWithError: URLError(.badServerResponse))
+            return
         }
         do {
             let (resp, data) = try handler(request)

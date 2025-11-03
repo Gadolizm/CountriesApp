@@ -12,13 +12,13 @@ import XCTest
 
 final class APIClientTests: XCTestCase {
 
-    private func makeClient(decoder: JSONDecoder = .init()) -> APIClient {
-        let cfg = NetworkConfig(
+    private func makeClient(decoder: JSONDecoder = .init()) throws -> APIClient {
+        let cfg = try NetworkConfig(
             baseURL: URL(string: "https://example.com")!,
             session: makeMockSession(),
             decoder: decoder
         )
-        return APIClient(config: cfg) // ← no backoff param anymore
+        return APIClient(config: cfg)
     }
 
     func test_decodes200OK() async throws {
@@ -28,19 +28,19 @@ final class APIClientTests: XCTestCase {
             return (resp, Data(#"[{"x":1}]"#.utf8))
         }
 
-        let client = makeClient()
+        let client = try makeClient()
         let req = APIRequest(path: "/v2/all", method: .GET, query: ["fields":"a"])
         let v: [[String:Int]] = try await client.perform(req)
         XCTAssertEqual(v.first?["x"], 1)
     }
 
-    func test_mapsHTTPError() async {
+    func test_mapsHTTPError() async throws {
         MockURLProtocol.handler = { _ in
             let resp = HTTPURLResponse(url: URL(string:"https://example.com/x")!, statusCode: 500, httpVersion: nil, headerFields: nil)!
             return (resp, Data())
         }
 
-        let client = makeClient()
+        let client = try makeClient()
         do {
             let _: [String:String] = try await client.perform(.init(path: "/x"))
             XCTFail("expected throw")
@@ -49,10 +49,10 @@ final class APIClientTests: XCTestCase {
         } catch { XCTFail("unexpected \(error)") }
     }
 
-    func test_mapsTransportErrorToNetwork() async {
+    func test_mapsTransportErrorToNetwork() async throws {
         MockURLProtocol.handler = { _ in throw URLError(.timedOut) }
 
-        let client = makeClient()
+        let client = try makeClient()
         do {
             let _: [String:String] = try await client.perform(.init(path: "/x"))
             XCTFail("expected throw")
@@ -61,13 +61,13 @@ final class APIClientTests: XCTestCase {
         } catch { XCTFail("unexpected \(error)") }
     }
 
-    func test_decodingErrorMapped() async {
+    func test_decodingErrorMapped() async throws {
         MockURLProtocol.handler = { _ in
             let resp = HTTPURLResponse(url: URL(string:"https://example.com/x")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
             return (resp, Data(#"{"oops":true}"#.utf8)) // invalid for expected type
         }
 
-        let client = makeClient()
+        let client = try makeClient()
         do {
             let _: [[String:String]] = try await client.perform(.init(path: "/x"))
             XCTFail("expected decoding error")
@@ -90,14 +90,14 @@ final class APIClientTests: XCTestCase {
             }
         }
 
-        let client = makeClient()
+        let client = try makeClient()
         // Note: this will wait ~0.3s due to built-in backoff
         let v: [[String:Int]] = try await client.perform(.init(path: "/x", method: .GET))
         XCTAssertEqual(v.first?["ok"], 1)
         XCTAssertEqual(calls, 2)
     }
 
-    func test_doesNotRetryOnPost() async {
+    func test_doesNotRetryOnPost() async throws {
         var calls = 0
         MockURLProtocol.handler = { _ in
             calls += 1
@@ -105,7 +105,7 @@ final class APIClientTests: XCTestCase {
             return (r, Data())
         }
 
-        let client = makeClient()
+        let client = try makeClient()
         do {
             let _: [String:String] = try await client.perform(.init(path: "/x", method: .POST, body: Data()))
             XCTFail("expected throw")
