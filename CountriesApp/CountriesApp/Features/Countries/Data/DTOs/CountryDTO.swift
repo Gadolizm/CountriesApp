@@ -6,10 +6,9 @@
 //
 
 
-struct CountryDTO: Decodable {
+struct CountryDTO: Codable {
     let name: String
     let alpha2Code: String
     let capital: String?
-    let currencies: [Cur]?
-    struct Cur: Decodable { let code: String?; let name: String? }
+    let currencies: [CurrencyDTO]?   // <- array, not currencyCode
 }
