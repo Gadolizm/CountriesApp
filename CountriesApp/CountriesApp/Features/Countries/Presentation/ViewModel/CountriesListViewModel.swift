@@ -15,11 +15,11 @@ final class CountriesListViewModel: ObservableObject, CountriesListViewModelingP
 
     // Dependencies
     private let getAll: GetAllCountries
-    private let locationProvider: LocationProvider
+    private let locationProvider: LocationProvidingProtocol
 
     // UI State
-    @Published private(set) var countries: [Country] = []
-    @Published private(set) var pinned: [Country] = []           // main view list (max 5)
+    @Published var countries: [Country] = []
+    @Published var pinned: [Country] = []           // main view list (max 5)
     @Published var query: String = ""
     @Published var isLoading = false
     @Published var errorMessage: String?
@@ -28,7 +28,7 @@ final class CountriesListViewModel: ObservableObject, CountriesListViewModelingP
     private let maxPinned = 5
     private let defaultCountryCode = "BR" // fallback if user denies (Brazil)
 
-    init(getAll: GetAllCountries, locationProvider: LocationProvider? = nil) {
+    init(getAll: GetAllCountries, locationProvider: LocationProvidingProtocol? = nil) {
         self.getAll = getAll
         self.locationProvider = locationProvider ?? LocationProvider()
     }
