@@ -6,12 +6,11 @@
 //
 
 
-// Presentation/CountryDetailView.swift
 import SwiftUI
 
 struct CountryDetailView: View {
     let country: Country
-    var primaryCurrency: Country.Currency? { country.currencies?.first }
+    var primaryCurrency: Currency? { country.currencies?.first }
 
     var body: some View {
         List {
