@@ -16,8 +16,8 @@ final class CountriesListViewModel: ObservableObject, CountriesListViewModelingP
     private let locationProvider: LocationProvidingProtocol
     private let persistence: CountriesPersistence?   // ← inject
 
-    @Published private(set) var countries: [Country] = []
-    @Published private(set) var pinned: [Country] = []
+    @Published var countries: [Country] = []
+    @Published var pinned: [Country] = []
     @Published var query = ""
     @Published var isLoading = false
     @Published var errorMessage: String?
